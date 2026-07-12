@@ -1,3 +1,7 @@
+output "data_factory_managed_private_endpoints_id" {
+  description = "Map of id values across all data_factory_managed_private_endpoints, keyed the same as var.data_factory_managed_private_endpoints"
+  value       = { for k, v in azurerm_data_factory_managed_private_endpoint.data_factory_managed_private_endpoints : k => v.id }
+}
 output "data_factory_managed_private_endpoints_data_factory_id" {
   description = "Map of data_factory_id values across all data_factory_managed_private_endpoints, keyed the same as var.data_factory_managed_private_endpoints"
   value       = { for k, v in azurerm_data_factory_managed_private_endpoint.data_factory_managed_private_endpoints : k => v.data_factory_id }
