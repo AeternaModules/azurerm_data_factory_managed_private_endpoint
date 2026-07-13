@@ -17,14 +17,6 @@ EOT
     fqdns              = optional(list(string))
     subresource_name   = optional(string)
   }))
-  validation {
-    condition = alltrue([
-      for k, v in var.data_factory_managed_private_endpoints : (
-        v.fqdns == null || (length(v.fqdns) > 0)
-      )
-    ])
-    error_message = "must not be empty"
-  }
   # --- Unconfirmed validation candidates, derived from azurerm_data_factory_managed_private_endpoint's provider source ---
   # Not auto-enabled: either a bespoke provider validator we can't safely translate,
   # or a path that crosses a list-typed block (needs its own for_each wrapping).
@@ -53,5 +45,8 @@ EOT
   #   condition: length(value) == 0
   #   message:   [from networkValidate.PrivateLinkSubResourceName: invalid when len(value) != 0]
   #   source:    [from networkValidate.PrivateLinkSubResourceName: invalid when len(value) != 0]
+  # path: fqdns[*]
+  #   condition: length(value) > 0
+  #   message:   must not be empty
 }
 
